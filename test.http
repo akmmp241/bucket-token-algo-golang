@@ -41,3 +41,7 @@ Authorization: kasmd
 ### GET 11
 GET http://localhost:3000/
 Authorization: jjwnncn
+
+### FINISH 1
+GET http://localhost:3000/finish
+Authorization: kasmd    

@@ -77,6 +77,21 @@ func main() {
 		return c.SendString("Hello, World!")
 	})
 
+	app.Get("/finish", func(c *fiber.Ctx) error {
+		uniqId := c.Get("Authorization")
+		if uniqId == "" {
+			return c.Status(fiber.StatusUnauthorized).SendString("Unauthorized")
+		}
+
+		// Remove user from the waiting room
+		err := redisClient.HDel(context.Background(), waitingRoomKey, uniqId).Err()
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString(err.Error())
+		}
+
+		return c.SendString("Finish")
+	})
+
 	go func() {
 		time.Sleep(5 * time.Millisecond)
 		log.Println(`Starting server on localhost:3000`)
