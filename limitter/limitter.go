@@ -1,6 +1,7 @@
 package limitter
 
 import (
+	"log"
 	"sync"
 	"time"
 )
@@ -21,6 +22,7 @@ func (tb *TokenBucket) TakeTokens(tokens int) bool {
 
 	if tb.CurrentToken >= tokens {
 		tb.CurrentToken -= tokens
+		log.Println("Current Token: ", tb.CurrentToken)
 		return true
 	}
 	return false
